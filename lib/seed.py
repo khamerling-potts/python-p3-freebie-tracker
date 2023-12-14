@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 
 # Script goes here!
-from random import choice
+from random import choice, randint
+from faker import Faker
+
+fake = Faker()
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -14,9 +17,14 @@ session = Session()
 
 
 def create_records():
-    freebies = [Freebie() for i in range(100)]
-    companies = [Company() for i in range(30)]
-    devs = [Dev() for i in range(60)]
+    freebies = [
+        Freebie(item_name=fake.word(), value=randint(5, 60)) for i in range(100)
+    ]
+    companies = [
+        Company(name=fake.unique.company(), founding_year=randint(1900, 2023))
+        for i in range(30)
+    ]
+    devs = [Dev(name=fake.unique.name()) for i in range(60)]
     session.add_all(freebies + companies + devs)
     session.commit()
     return freebies, companies, devs

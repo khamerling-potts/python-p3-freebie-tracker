@@ -3,7 +3,7 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models import Company, Dev
+from models import Company, Dev, Freebie
 
 if __name__ == "__main__":
     engine = create_engine("sqlite:///freebies.db")
